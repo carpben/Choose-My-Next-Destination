@@ -47,10 +47,6 @@ export default class Controller extends Component {
 
         const newHistory = [...this.state.history, { searchValue, day, hour, min }]
 
-        const test = [1, 2, 3]
-
-        const str = "Paris"
-        str.push(' Europe')
 
         this.setState({ history: newHistory })
         console.log(newHistory)
