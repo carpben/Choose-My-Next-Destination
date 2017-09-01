@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import globeLogo from './globe.svg'
 import './App.css'
 
+import Header from './_components/Header.js'
 import Controller from './_components/Controller.js'
 
 class App extends Component {
@@ -16,29 +16,5 @@ class App extends Component {
     );
   }
 }
-
-function Header(){
-    return (
-        <div className="App-header">
-            <img src={globeLogo} className="App-logo" alt="logo" />
-          <h2>Choose My Next Destination</h2>
-        </div>
-    )
-}
-
-// class Controller extends Component {
-//   render() {
-//     return (
-//         <div className="App-controller">
-//             <SearchControl />
-//             <HistoryDisplay />
-//       </div>
-//     );
-//   }
-// }
-
-
-
-
 
 export default App;

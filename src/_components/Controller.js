@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
 
+
 export default class Controller extends Component {
     constructor(props) {
       super(props);
@@ -26,7 +27,7 @@ export default class Controller extends Component {
         // if (event.target.name=='submitSearch'){
             alert('A name was submitted: ' + this.state.searchValue + event.target.name);
             this.setState({testString:event.target.value})
-            this.setState({testString:event.target.name})
+            this.setState({testString2:event.target.name})
             event.preventDefault();
         // }
     }
@@ -38,21 +39,16 @@ export default class Controller extends Component {
         })
     }
     go = (newSearchValue)=>{
-        var searchValue = newSearchValue
+        // var searchValue = newSearchValue
         var dateObj = new Date()
         var dayInt = dateObj.getDay()
         var day = this.state.days[dayInt]
         var hour = dateObj.getHours()
         var min = dateObj.getMinutes()
-
-        const newHistory = [...this.state.history, { searchValue, day, hour, min }]
-
+        const newHistory = [...this.state.history, { searchValue:newSearchValue, day, hour, min }]
 
         this.setState({ history: newHistory })
         console.log(newHistory)
-
-        alert('A name was submitted: ' + searchValue);
-
     }
     changeAndGo = (newSearchValue) => {
         this.changeSearchValue(newSearchValue)
@@ -65,6 +61,9 @@ export default class Controller extends Component {
         console.log(randCity)
 
         this.changeAndGo(randCity)
+    }
+    handleHistoryClick = (events) => {
+
     }
 
 
@@ -81,20 +80,17 @@ export default class Controller extends Component {
           </form>
           <SelectCity sweetInnCities={this.state.sweetInnCities} changeAndGo={this.changeAndGo} />
           <button value="Random (Not Submit)" onClick={this.handleRandomClick}>Random SweatINN City</button>
-          <input type="submit" value="Show Search History" />
+          <button value="Show Search History" onClick={this.handleHistoryClick}>Show Search History</button>
           <p>{this.state.testString}</p>
           <p>{this.state.testString2}</p>
           <p>{this.state.testString3}</p>
-          <HistoryDisplay />
+          <HistoryDisplay history={this.state.history} />
         </section>
       );
     }
 }
 
 class SelectCity extends Controller {
-        constructor (props){
-            super(props)
-        }
         handleChange = (event) => {
             this.props.changeAndGo(event.target.value)
         }
@@ -108,21 +104,16 @@ class SelectCity extends Controller {
         }
 }
 
-class SearchControl extends Component {
-    constructor (props){
-        super(props)
-    }
-    render (){
-        return (
-            <div class="SearchControl">
-
-            </div>
-        )
-    }
-}
 
 class HistoryDisplay extends Component {
+
+
     render(){
-        return null
+        const historyItems = this.props.history.map((historicSearch)=><li>{historicSearch.searchValue}</li>)
+        return (
+            <ul>
+                {historyItems}
+            </ul>
+        )
     }
 }
