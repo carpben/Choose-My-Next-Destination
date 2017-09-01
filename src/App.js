@@ -40,20 +40,38 @@ class Controller extends Component {
           searchValue: '',
           showHistory: false,
           history: {},
-          sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"]
+          sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
+          testString: "Test1",
+          testString2: "Test2"
+
       };
 
     //   this.handleChange = this.handleChange.bind(this);
     //   this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange = (event) => {
-      this.setState({value: event.target.value});
+    handleSearchFieldChange = (event) => {
+      this.setState({searchValue: event.target.value});
     }
 
     handleSubmit = (event) => {
-      alert('A name was submitted: ' + this.state.value);
-      event.preventDefault();
+        // if (event.target.name=='submitSearch'){
+            alert('A name was submitted: ' + this.state.searchValue + event.target.name);
+            this.setState({testString:event.target.value})
+            this.setState({testString:event.target.name})
+            event.preventDefault();
+        // }
+    }
+
+    changeSearchValue = (newSearchValue)=>{
+        this.setState ({searchValue:newSearchValue})
+    }
+    go = ()=>{
+        alert('A name was submitted: ' + this.state.searchValue);
+    }
+    changeAndGo = (newSearchValue) => {
+        this.changeSearchValue(newSearchValue)
+        this.go()
     }
 
     render() {
@@ -63,14 +81,15 @@ class Controller extends Component {
               {/* <SearchControl /> */}
               <label>
                 Name:
-                <input type="text" value={this.state.searchValue} onChange={this.handleChange} />
+                <input type="text" value={this.state.searchValue} onChange={this.handleSearchFieldChange} />
               </label>
-              <input type="submit" value="Take me" />
-              <SelcetCity sweetInnCities={this.state.sweetInnCities} />
-
+              <input type="submit" name="submitSearch" id='submitSearch' value="Take me" />
+              <SelcetCity sweetInnCities={this.state.sweetInnCities} changeAndGo={this.changeAndGo} />
               <input type="submit" value="Random SweatINN City" />
               <input type="submit" value="Show Search History" />
           </form>
+          <p>{this.state.testString}</p>
+          <p>{this.state.testString2}</p>
           <HistoryDisplay />
         </section>
       );
@@ -81,12 +100,15 @@ class SelcetCity extends Controller {
         constructor (props){
             super(props)
         }
+        handleChange = (event) => {
+            this.props.changeAndGo(event.target.value)
+        }
         render (){
             const cityOptions = this.props.sweetInnCities.map((city)=><option>{city}</option>)
             return (
-                <select>
-                {cityOptions}
-            </select>
+                <select onChange={this.handleChange}>
+                    {cityOptions}
+                </select>
             )
         }
 }
