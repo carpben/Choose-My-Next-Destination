@@ -1,19 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import globeLogo from './globe.svg';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+          <Header />
+          <Controller />
       </div>
+    );
+  }
+}
+
+function Header(){
+    return (
+        <div className="App-header">
+            <img src={globeLogo} className="App-logo" alt="logo" />
+          <h2>Choose My Next Destination</h2>
+        </div>
+    )
+}
+
+class Controller extends Component {
+  render() {
+    return (
+        <p className="App-intro">
+          Peace <code>src/App.js</code> and save to reload.
+        </p>
     );
   }
 }
