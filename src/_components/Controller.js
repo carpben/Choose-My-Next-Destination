@@ -45,7 +45,9 @@ export default class Controller extends Component {
         var day = this.state.days[dayInt]
         var hour = dateObj.getHours()
         var min = dateObj.getMinutes()
-        const newHistory = [...this.state.history, { searchValue:newSearchValue, day, hour, min }]
+        const sec = dateObj.getSeconds()
+        const msec = dateObj.getMilliseconds()
+        const newHistory = [...this.state.history, { searchValue:newSearchValue, day, hour, min, sec, msec }]
 
         this.setState({ history: newHistory })
         console.log(newHistory)
@@ -84,7 +86,7 @@ export default class Controller extends Component {
           <p>{this.state.testString}</p>
           <p>{this.state.testString2}</p>
           <p>{this.state.testString3}</p>
-          <HistoryDisplay history={this.state.history} />
+          <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} />
         </section>
       );
     }
@@ -106,14 +108,18 @@ class SelectCity extends Controller {
 
 
 class HistoryDisplay extends Component {
-
+    clickHandler = (e) => {
+        console.log(e.target.value)
+        this.props.changeAndGo(e.target.textContent)
+    }
 
     render(){
-        const historyItems = this.props.history.map((historicSearch)=><li>{historicSearch.searchValue}</li>)
+        const historyItems = this.props.history.map((historicSearch)=><tr key={historicSearch.day+historicSearch.hour+historicSearch.min +historicSearch.sec + historicSearch.msec}><td>{historicSearch.day}</td><td>{historicSearch.hour}:{historicSearch.min}</td><td><a href='#' onClick={this.clickHandler}>{historicSearch.searchValue}</a></td></tr>)
         return (
-            <ul>
-                {historyItems}
-            </ul>
+            <table>
+                <thead><tr><th>Day</th><th>Hour</th><th>Search Value</th></tr></thead>
+                <tbody>{historyItems}</tbody>
+            </table>
         )
     }
 }
