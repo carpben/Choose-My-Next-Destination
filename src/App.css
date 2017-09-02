@@ -17,17 +17,22 @@
 .App-controller {
   font-size: large;
 }
-form {
+.first-row, .second-row {
     magin-top:15px;
     margin-bottom: 15px;
 }
+form {
+    display: inline-block;
+}
+.input, .btn, select {
+    padding: 7px;
+    border-radius: 5px; 
+
+}
 label {
-    margin: 0 10px; 
+    margin: 0 10px;
 }
-.form-div {
-    margin-left: auto;
-    margin-right: auto;
-}
+
 .btn {
     margin-left: 15px;
     margin-right: 15px;
