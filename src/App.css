@@ -17,13 +17,20 @@
 .App-controller {
   font-size: large;
 }
-.form-group {
+form {
+    magin-top:15px;
+    margin-bottom: 15px;
+}
+label {
+    margin: 0 10px; 
+}
+.form-div {
     margin-left: auto;
     margin-right: auto;
 }
 .btn {
     margin-left: 15px;
-    margin-right: 15px; 
+    margin-right: 15px;
 }
 .Presentation {
     border: 1px solid blue;
