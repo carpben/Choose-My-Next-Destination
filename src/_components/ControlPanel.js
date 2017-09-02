@@ -62,17 +62,16 @@ export default class ControlPanel extends Component {
     render() {
       return (
         <section className="App-controller">
-          <form onSubmit={this.handleSubmit}>
-              {/* <SearchControl /> */}
-              <label>
-                Name:
-                <input type="text" value={this.state.searchValue} onChange={this.handleSearchFieldChange} />
-              </label>
-              <input type="submit" />
+          <form onSubmit={this.handleSubmit} className="form-inline">
+              <div className="form-group">
+                  <input className="form-control" type="text" placeholder="Enter City Name" />
+
+                  <input className="btn" type="submit" value="Visit" />
+                  <button className="btn" onClick={this.handleHistoryClick}>Show History</button>
+              </div>
           </form>
           <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
           <button onClick={this.handleRandomClick}>Random SweatINN City</button>
-          <button onClick={this.handleHistoryClick}>Show Search History</button>
           {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
         </section>
       );
