@@ -3,6 +3,7 @@ import '../App.css'
 
 export default class Presentation extends Component {
 
+
     render (){
         var content
         if (!this.props.destination){

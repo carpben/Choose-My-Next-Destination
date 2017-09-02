@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import '../App.css'
 
 
-export default class Controller extends Component {
+export default class ControlPanel extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -13,37 +13,21 @@ export default class Controller extends Component {
           testString2: "Test2",
           testString3: "Test3",
           days:['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
       };
-
-    }
-
-    handleSearchFieldChange = (event) => {
-      this.setState({searchValue: event.target.value});
-    }
-
-    handleSubmit = (event) => {
-        // if (event.target.name=='submitSearch'){
-            alert('A name was submitted: ' + this.state.searchValue + event.target.name);
-            this.setState({testString:event.target.value})
-            this.setState({testString2:event.target.name})
-            event.preventDefault();
-        // }
     }
 
     changeSearchValue = (newSearchValue)=>{
         this.setState ({
             searchValue:newSearchValue,
-            testString3:newSearchValue
         })
     }
     go = (newSearchValue)=>{
         // var searchValue = newSearchValue
-        var dateObj = new Date()
-        var dayInt = dateObj.getDay()
-        var day = this.state.days[dayInt]
-        var hour = dateObj.getHours()
-        var min = dateObj.getMinutes()
+        const dateObj = new Date()
+        const dayInt = dateObj.getDay()
+        const day = this.state.days[dayInt]
+        const hour = dateObj.getHours()
+        const min = dateObj.getMinutes()
         const sec = dateObj.getSeconds()
         const msec = dateObj.getMilliseconds()
         const newHistory = [...this.state.history, { searchValue:newSearchValue, day, hour, min, sec, msec }]
@@ -56,12 +40,17 @@ export default class Controller extends Component {
         this.changeSearchValue(newSearchValue)
         this.go(newSearchValue)
     }
+    handleSearchFieldChange = (event) => {
+      this.changeSearchValue(event.target.value);
+    }
+
+    handleSubmit = (event) => {
+            this.go(this.state.searchValue)
+            event.preventDefault();
+    }
     handleRandomClick = (event) => {
         let randInt = Math.floor(Math.random()*this.props.sweetInnCities.length)
-        console.log(randInt)
         let randCity = this.props.sweetInnCities[randInt]
-        console.log(randCity)
-
         this.changeAndGo(randCity)
     }
     handleHistoryClick = (events) => {
@@ -69,7 +58,6 @@ export default class Controller extends Component {
         this.setState({showHistory:showHistoryNew})
         console.log (showHistoryNew)
     }
-
 
     render() {
       return (
@@ -80,21 +68,18 @@ export default class Controller extends Component {
                 Name:
                 <input type="text" value={this.state.searchValue} onChange={this.handleSearchFieldChange} />
               </label>
-              <input type="submit" name="submitSearch" id='submitSearch' value="Take me" />
+              <input type="submit" />
           </form>
           <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
-          <button value="Random (Not Submit)" onClick={this.handleRandomClick}>Random SweatINN City</button>
-          <button value="Show Search History" onClick={this.handleHistoryClick}>Show Search History</button>
-          <p>{this.state.testString}</p>
-          <p>{this.state.testString2}</p>
-          <p>{this.state.testString3}</p>
+          <button onClick={this.handleRandomClick}>Random SweatINN City</button>
+          <button onClick={this.handleHistoryClick}>Show Search History</button>
           {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
         </section>
       );
     }
 }
 
-class SelectCity extends Controller {
+class SelectCity extends Component {
         handleChange = (event) => {
             this.props.changeAndGo(event.target.value)
         }
@@ -116,9 +101,12 @@ class HistoryDisplay extends Component {
     }
 
     render(){
-        const historyItems = this.props.history.map((historicSearch)=><tr key={historicSearch.day+historicSearch.hour+historicSearch.min +historicSearch.sec + historicSearch.msec}><td>{historicSearch.day}</td><td>{historicSearch.hour}:{historicSearch.min}</td><td><a href='#' onClick={this.clickHandler}>{historicSearch.searchValue}</a></td></tr>)
+        const historyItems = this.props.history.map( (historicSearch) => {
+            const min = historicSearch.min<10 ? `0${historicSearch.min}` : historicSearch.min
+            return <tr key={historicSearch.day+historicSearch.hour+historicSearch.min +historicSearch.sec + historicSearch.msec}><td>{historicSearch.day}</td><td>{historicSearch.hour}:{min}</td><td><a href='#goToCity' onClick={this.clickHandler}>{historicSearch.searchValue}</a></td></tr>
+        })
         return (
-            <table>
+            <table className='HistoryDisplay'>
                 <thead><tr><th>Day</th><th>Hour</th><th>Search Value</th></tr></thead>
                 <tbody>{historyItems}</tbody>
             </table>
