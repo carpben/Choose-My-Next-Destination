@@ -9,7 +9,6 @@ export default class Controller extends Component {
           searchValue: '',
           showHistory: false,
           history: [],
-          sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
           testString: "Test1",
           testString2: "Test2",
           testString3: "Test3",
@@ -50,6 +49,7 @@ export default class Controller extends Component {
         const newHistory = [...this.state.history, { searchValue:newSearchValue, day, hour, min, sec, msec }]
 
         this.setState({ history: newHistory })
+        this.props.changeDestination(newSearchValue)
         console.log(newHistory)
     }
     changeAndGo = (newSearchValue) => {
@@ -57,15 +57,17 @@ export default class Controller extends Component {
         this.go(newSearchValue)
     }
     handleRandomClick = (event) => {
-        let randInt = Math.floor(Math.random()*this.state.sweetInnCities.length)
+        let randInt = Math.floor(Math.random()*this.props.sweetInnCities.length)
         console.log(randInt)
-        let randCity = this.state.sweetInnCities[randInt]
+        let randCity = this.props.sweetInnCities[randInt]
         console.log(randCity)
 
         this.changeAndGo(randCity)
     }
     handleHistoryClick = (events) => {
-
+        const showHistoryNew = !this.state.showHistory
+        this.setState({showHistory:showHistoryNew})
+        console.log (showHistoryNew)
     }
 
 
@@ -80,13 +82,13 @@ export default class Controller extends Component {
               </label>
               <input type="submit" name="submitSearch" id='submitSearch' value="Take me" />
           </form>
-          <SelectCity sweetInnCities={this.state.sweetInnCities} changeAndGo={this.changeAndGo} />
+          <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
           <button value="Random (Not Submit)" onClick={this.handleRandomClick}>Random SweatINN City</button>
           <button value="Show Search History" onClick={this.handleHistoryClick}>Show Search History</button>
           <p>{this.state.testString}</p>
           <p>{this.state.testString2}</p>
           <p>{this.state.testString3}</p>
-          <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} />
+          {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
         </section>
       );
     }
