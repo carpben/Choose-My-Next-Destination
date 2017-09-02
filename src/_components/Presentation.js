@@ -6,16 +6,14 @@ export default class Presentation extends Component {
 
     render (){
         var content
-        if (!this.props.destination){
+        if (!this.props.imgURLs){
             content=<ul>{this.props.sweetInnCities.map( city => <li>1 pic of {city}</li> )}</ul>
-            console.log(`this.props.destination is empty`)
+            console.log(`this.props.imgURLs is empty`)
         } else {
             console.log('not empty')
-            content = `10 pics of ${this.props.destination}`
         }
         return (
             <section className="Presentation">
-                {content}
             </section>
         )
     }
