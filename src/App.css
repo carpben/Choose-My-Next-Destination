@@ -40,6 +40,15 @@
 
 .Presentation {
   border: 1px solid blue; }
+  .Presentation .img-presentation {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; }
+    .Presentation .img-presentation img {
+      width: 30%;
+      height: 30%;
+      margin-top: 20px;
+      margin-bottom: 20px; }
 
 .HistoryDisplay {
   margin: 20px auto; }

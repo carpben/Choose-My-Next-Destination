@@ -19,15 +19,28 @@ class App extends Component {
         console.log('destination changed')
         const flickrKey= "f7c143a6865aefe5a377912d751edb5a"
 
-        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=10&tags=${newLocation}&extras=url_l&format=json&nojsoncallback=1`
+        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=20&tags=${newLocation}&extras=url_l&format=json&nojsoncallback=1`
         console.log(`AJAXURL: ${AJAXURL}`)
         fetch(AJAXURL)
             .then(res => res.json())
             .then(data => {
                 // console.log(data)
-                const imgURLs = data.photos.photo.map( photo => photo.url_l )
-                this.setState({imgURLs, locationToPresent:newLocation})
+                let imgURLs = []
+                data.photos.photo.forEach( (photo) => {
+                    if (photo.width_l==1024 && imgURLs.length<9){
+                        imgURLs.push(photo.url_l)
+                    }
+                })
+
+
+                // const imgURLs = data.photos.photo.reduce( (accu, photo) => {
+                //     if(photo.width_l==1024 && accu.length<10){
+                //         accu.push(photo.url_l)
+                //     }
+                // }, [])
                 console.log(imgURLs)
+
+                this.setState({imgURLs, locationToPresent:newLocation})
             })
             .catch((error)=>{console.log(error)})
     }

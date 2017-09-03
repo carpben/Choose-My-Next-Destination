@@ -5,12 +5,24 @@ export default class Presentation extends Component {
 
 
     render (){
-        var content
+
+        let content1 = (
+            <div className="img-presentation">
+                {this.props.imgURLs.map( (url) => (
+                    // <div className="img-w" key={url}>
+                        <img src={url} alt={this.props.destination} />
+                    //  </div> 
+                )
+                )}
+            </div>
+        )
+
+        let content2
         if (!this.props.imgURLs){
-            content=<ul>{this.props.sweetInnCities.map( city => <li>1 pic of {city}</li> )}</ul>
+            content2=<ul>{this.props.sweetInnCities.map( city => <li>1 pic of {city}</li> )}</ul>
             console.log(`this.props.imgURLs is empty`)
         } else {
-            content = (
+            content2 = (
                 <div className="carousel carousel-main" data-flickity='{"pageDots": false }'>
     {/* while( have_rows('product_images') ) {
         the_row();
@@ -27,7 +39,8 @@ export default class Presentation extends Component {
         }
         return (
             <section className="Presentation">
-                {content}
+                {content1}
+                {content2}
             </section>
         )
     }
