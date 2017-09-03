@@ -16,7 +16,7 @@
   h1 {
       font-size:31px;
       margin-top: 10px;
-    //   margin-bottom: 20px
+      margin-bottom: 0;
   }
 }
 
@@ -37,11 +37,31 @@
       .form-inline {
           margin-right: 20px;
       }
+      .search-input {
+          border-right-color: #aaa;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+      }
+      .search-submit {
+          border-top-left-radius: 0;
+          border-bottom-left-radius:0;
+          border-left: 0;
+      }
+  }
+  .second-row {
+      .btn {
+          margin-left: 20px;
+      }
   }
 
 }
 .Presentation {
     border: 1px solid blue;
+    // img {
+    //     width: 30%;
+    //     margin: 50px;
+    //     display: inline-block;
+    // }
 }
 
 .HistoryDisplay {

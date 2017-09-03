@@ -12,7 +12,8 @@
     margin-bottom: 15px; }
   .App-header h1 {
     font-size: 31px;
-    margin-top: 10px; }
+    margin-top: 10px;
+    margin-bottom: 0; }
 
 .App-controller {
   font-size: large; }
@@ -26,6 +27,16 @@
     margin-right: 25px; }
   .App-controller .first-row .form-inline {
     margin-right: 20px; }
+  .App-controller .first-row .search-input {
+    border-right-color: #aaa;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0; }
+  .App-controller .first-row .search-submit {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 0; }
+  .App-controller .second-row .btn {
+    margin-left: 20px; }
 
 .Presentation {
   border: 1px solid blue; }
