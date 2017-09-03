@@ -9,17 +9,20 @@ export default class ControlPanel extends Component {
           searchInput: '',
           showHistory: false,
           history: [],
+          test:""
       };
     }
 
     changeSearchInput = (newSearchInput)=>{
+        console.log(`changeSearchInput started with ${newSearchInput}`)
         this.setState ({
-            searchInput:newSearchInput
+            searchInput:newSearchInput,
+            test:newSearchInput
         })
     }
     go = (newLocation)=>{
         console.log(`go started ${newLocation}`)
-
+        // this.changeSearchInput(newLocation)
         const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         const dateObj = new Date()
         const dayInt = dateObj.getDay()
@@ -66,7 +69,7 @@ export default class ControlPanel extends Component {
               <form onSubmit={this.handleSubmit} className="form-inline">
                   {/* <div className="form-div"> */}
                   <label className="label-type-1">Search It</label>
-                      <input onChange={this.handleSearchFieldChange} className="form-control search-input" type="text" placeholder="Enter City Name" />
+                      <input onChange={this.handleSearchFieldChange} className="form-control search-input" type="text" placeholder="Enter City Name" value={this.state.searchInput}/>
                       <input className="btn search-submit" type="submit" />
                   {/* </div> */}
               </form>
@@ -78,6 +81,7 @@ export default class ControlPanel extends Component {
                   <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
                   <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
             </div>
+            <h1>{this.state.test}</h1>
 
           {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
 

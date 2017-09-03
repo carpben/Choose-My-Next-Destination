@@ -27,7 +27,7 @@ class App extends Component {
                 // console.log(data)
                 let imgURLs = []
                 data.photos.photo.forEach( (photo) => {
-                    if (photo.width_l==1024 && imgURLs.length<9){
+                    if (photo.width_l==="1024" && imgURLs.length<9){
                         imgURLs.push(photo.url_l)
                     }
                 })

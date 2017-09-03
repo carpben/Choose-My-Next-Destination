@@ -11,7 +11,7 @@ export default class Presentation extends Component {
                 {this.props.imgURLs.map( (url) => (
                     // <div className="img-w" key={url}>
                         <img src={url} alt={this.props.destination} />
-                    //  </div> 
+                    //  </div>
                 )
                 )}
             </div>
