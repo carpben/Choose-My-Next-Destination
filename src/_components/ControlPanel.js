@@ -64,7 +64,7 @@ export default class ControlPanel extends Component {
         <section className="App-controller">
           <form onSubmit={this.handleSubmit} className="form-inline">
               <div className="form-div">
-                  <label>Search It Up</label>
+                  <h5>Search It Up</h5>
                   <input className="form-control" type="text" placeholder="Enter City Name" />
                   <input className="btn" type="submit" value="Visit" />
                   <button className="btn" onClick={this.handleHistoryClick}>Show History</button>
