@@ -31,11 +31,6 @@ class App extends Component {
                     }
                 })
 
-                // const imgURLs = data.photos.photo.reduce( (accu, photo) => {
-                //     if(photo.width_l==1024 && accu.length<10){
-                //         accu.push(photo.url_l)
-                //     }
-                // }, [])
                 console.log(imgURLs)
 
                 this.setState({imgURLs, locationToPresent:Location})
@@ -54,11 +49,12 @@ class App extends Component {
     }
 
   render() {
+      const presentation = <Presentation incrementPresentationLoadCycles={this.incrementPresentationLoadCycles} locationToPresent={this.state.locationToPresent} imgURLs={this.state.imgURLs} sweetInnCities={this.state.sweetInnCities} presentationLoadCycles={this.state.presentationLoadCycles}/>
     return (
       <div className="App">
           <Header />
           <ControlPanel sweetInnCities={this.state.sweetInnCities} changeLocationToPresent={this.changeLocationToPresent}/>
-          <Presentation incrementPresentationLoadCycles={this.incrementPresentationLoadCycles} locationToPresent={this.state.locationToPresent} imgURLs={this.state.imgURLs} sweetInnCities={this.state.sweetInnCities}/>
+          {this.state.locationToPresent ? presentation : ""}
           <Footer />
       </div>
     );

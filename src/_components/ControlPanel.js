@@ -102,7 +102,7 @@ class SelectCity extends Component {
             console.log('selected')
             console.log(selectedValue)
             console.log(typeof(selectedValue))
-            if (selectedValue != 'A'){
+            if (selectedValue !== 'A'){
                 console.log('if executes')
                 const cityInt = parseInt(selectedValue)
                 const city = this.props.sweetInnCities[cityInt]
