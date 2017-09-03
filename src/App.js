@@ -13,13 +13,12 @@ class App extends Component {
             locationToPresent: "",
             imgURLs:[],
             sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
+            presentationLoadCycles:1
         }
     }
-    changeLocationToPresent = (newLocation) => {
-        console.log('destination changed')
+    updateImgURLs = (Location, imgLimit) => {
         const flickrKey= "f7c143a6865aefe5a377912d751edb5a"
-
-        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=20&tags=${newLocation}&extras=url_l&format=json&nojsoncallback=1`
+        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=65&tags=${Location}&extras=url_l&format=json&nojsoncallback=1`
         console.log(`AJAXURL: ${AJAXURL}`)
         fetch(AJAXURL)
             .then(res => res.json())
@@ -27,11 +26,10 @@ class App extends Component {
                 // console.log(data)
                 let imgURLs = []
                 data.photos.photo.forEach( (photo) => {
-                    if (photo.width_l==="1024" && imgURLs.length<9){
+                    if (photo.width_l==="1024"){
                         imgURLs.push(photo.url_l)
                     }
                 })
-
 
                 // const imgURLs = data.photos.photo.reduce( (accu, photo) => {
                 //     if(photo.width_l==1024 && accu.length<10){
@@ -40,16 +38,27 @@ class App extends Component {
                 // }, [])
                 console.log(imgURLs)
 
-                this.setState({imgURLs, locationToPresent:newLocation})
+                this.setState({imgURLs, locationToPresent:Location})
             })
             .catch((error)=>{console.log(error)})
     }
+
+    changeLocationToPresent= (newLocation) => {
+        console.log('destination changed')
+        this.setState({locationToPresent:newLocation, presentationLoadCycles:1})
+        this.updateImgURLs(newLocation, 9)
+    }
+    incrementPresentationLoadCycles = () => {
+        this.state.presentationLoadCycles++
+        console.log('cycle incremented')
+    }
+
   render() {
     return (
       <div className="App">
           <Header />
           <ControlPanel sweetInnCities={this.state.sweetInnCities} changeLocationToPresent={this.changeLocationToPresent}/>
-          <Presentation destination={this.state.locationToPresent} imgURLs={this.state.imgURLs} sweetInnCities={this.state.sweetInnCities}/>
+          <Presentation incrementPresentationLoadCycles={this.incrementPresentationLoadCycles} locationToPresent={this.state.locationToPresent} imgURLs={this.state.imgURLs} sweetInnCities={this.state.sweetInnCities}/>
           <Footer />
       </div>
     );

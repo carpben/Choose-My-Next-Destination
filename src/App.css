@@ -37,23 +37,32 @@
     border-left: 0; }
   .App-controller .second-row .btn {
     margin-left: 20px; }
+  .App-controller .HistoryDisplay {
+    margin: 20px auto; }
+    .App-controller .HistoryDisplay th {
+      padding: 5px 15px; }
 
 .Presentation {
-  border: 1px solid blue; }
+  border: 1px solid blue;
+  margin-top: 80px;
+  margin-bottom: 70px; }
+  .Presentation h2 {
+    margin-bottom: 20px; }
   .Presentation .img-presentation {
+    width: 1150px;
+    margin: auto;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; }
+    justify-content: space-between;
+    align-items: center; }
     .Presentation .img-presentation img {
       width: 30%;
       height: 30%;
       margin-top: 20px;
-      margin-bottom: 20px; }
-
-.HistoryDisplay {
-  margin: 20px auto; }
-  .HistoryDisplay th {
-    padding: 5px 15px; }
+      margin-bottom: 20px;
+      border: 8px solid white; }
+  .Presentation h4 {
+    color: #add8e6; }
 
 @keyframes App-logo-spin {
   from {
