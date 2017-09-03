@@ -10,23 +10,23 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state={
-            destination: "",
+            locationToPresent: "",
+            imgURLs:[],
             sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
-            imgURLs:[]
         }
     }
-    changeDestination = (newDestination) => {
-        this.setState({destination:newDestination})
+    changeLocationToPresent = (newLocation) => {
         console.log('destination changed')
         const flickrKey= "f7c143a6865aefe5a377912d751edb5a"
-        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=10&tags=${newDestination}&extras=url_l&format=json&nojsoncallback=1`
 
+        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=10&tags=${newLocation}&extras=url_l&format=json&nojsoncallback=1`
+        console.log(`AJAXURL: ${AJAXURL}`)
         fetch(AJAXURL)
             .then(res => res.json())
             .then(data => {
                 // console.log(data)
                 const imgURLs = data.photos.photo.map( photo => photo.url_l )
-                this.setState({imgURLs})
+                this.setState({imgURLs, locationToPresent:newLocation})
                 console.log(imgURLs)
             })
             .catch((error)=>{console.log(error)})
@@ -35,8 +35,8 @@ class App extends Component {
     return (
       <div className="App">
           <Header />
-          <ControlPanel sweetInnCities={this.state.sweetInnCities} changeDestination={this.changeDestination}/>
-          <Presentation destination={this.state.destination} imgURLs={this.state.imgURLs} sweetInnCities={this.state.sweetInnCities}/>
+          <ControlPanel sweetInnCities={this.state.sweetInnCities} changeLocationToPresent={this.changeLocationToPresent}/>
+          <Presentation destination={this.state.locationToPresent} imgURLs={this.state.imgURLs} sweetInnCities={this.state.sweetInnCities}/>
           <Footer />
       </div>
     );

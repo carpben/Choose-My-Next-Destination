@@ -6,46 +6,46 @@ export default class ControlPanel extends Component {
     constructor(props) {
       super(props);
       this.state = {
-          searchValue: '',
+          searchInput: '',
           showHistory: false,
           history: [],
-          testString: "Test1",
-          testString2: "Test2",
-          testString3: "Test3",
-          days:['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
       };
     }
 
-    changeSearchValue = (newSearchValue)=>{
+    changeSearchInput = (newSearchInput)=>{
         this.setState ({
-            searchValue:newSearchValue,
+            searchInput:newSearchInput
         })
     }
-    go = (newSearchValue)=>{
-        // var searchValue = newSearchValue
+    go = (newLocation)=>{
+        console.log(`go started ${newLocation}`)
+
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         const dateObj = new Date()
         const dayInt = dateObj.getDay()
-        const day = this.state.days[dayInt]
+        const day = days[dayInt]
         const hour = dateObj.getHours()
         const min = dateObj.getMinutes()
-        const sec = dateObj.getSeconds()
+        const sec = dateObj.getSeconds() //seconds and milsecs are collected for the unique key when creating lists and similar elements.
         const msec = dateObj.getMilliseconds()
-        const newHistory = [...this.state.history, { searchValue:newSearchValue, day, hour, min, sec, msec }]
+        const newHistory = [...this.state.history, { location:newLocation, day, hour, min, sec, msec }]
 
+        this.props.changeLocationToPresent(newLocation)
         this.setState({ history: newHistory })
-        this.props.changeDestination(newSearchValue)
         console.log(newHistory)
     }
-    changeAndGo = (newSearchValue) => {
-        this.changeSearchValue(newSearchValue)
-        this.go(newSearchValue)
+    changeAndGo = (newSearchInput) => {
+        this.changeSearchInput(newSearchInput)
+        this.go(newSearchInput)
     }
     handleSearchFieldChange = (event) => {
-      this.changeSearchValue(event.target.value);
+      this.changeSearchInput(event.target.value);
+      console.log(`handleSearchFieldChange called ${this.state.searchInput}`)
     }
-
     handleSubmit = (event) => {
-            this.go(this.state.searchValue)
+        console.log('submit pressed')
+        console.log(this.state.searchInput)
+            this.go(this.state.searchInput)
             event.preventDefault();
     }
     handleRandomClick = (event) => {
@@ -56,59 +56,33 @@ export default class ControlPanel extends Component {
     handleHistoryClick = (events) => {
         const showHistoryNew = !this.state.showHistory
         this.setState({showHistory:showHistoryNew})
-        console.log (showHistoryNew)
     }
 
     render() {
       return (
         <section className="App-controller">
+
             <div className="first-row">
-          <form onSubmit={this.handleSubmit} className="form-inline">
-              {/* <div className="form-div"> */}
-              <label className="label-type-1">Search It</label>
-                  <input className="form-control" type="text" placeholder="Enter City Name" />
-                  <input className="btn" type="submit" value="Visit" />
-              {/* </div> */}
-          </form>
-          <button className="btn" onClick={this.handleHistoryClick}>Show History</button>
+              <form onSubmit={this.handleSubmit} className="form-inline">
+                  {/* <div className="form-div"> */}
+                  <label className="label-type-1">Search It</label>
+                      <input onChange={this.handleSearchFieldChange} className="form-control search-input" type="text" placeholder="Enter City Name" />
+                      <input className="btn search-submit" type="submit" />
+                  {/* </div> */}
+              </form>
+              <button className="btn" onClick={this.handleHistoryClick}>Show History</button>
+            </div>
 
-      </div>
-      <div className="second-row">
-          <form onSubmit={this.handleSubmit} className="form-inline">
-              {/* <div className="form-group"> */}
-              <label className="label-type-1">Or Choose one of SweetInn Cities</label>
-
+            <div className="second-row">
+                  <label className="label-type-1">Or Choose one of SweetInn Cities</label>
                   <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
                   <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
-            {/* </div> */}
-        </form>
-    </div>
-    
-    <div className="input-group">
-      <input type="text" className="form-control" placeholder="Search for..." aria-label="Search for..." />
-      <span className="input-group-btn">
-        <button className="btn btn-secondary" type="button">Go!</button>
-      </span>
-    </div>
-<br />
-<div className="row">
-  <div className="col-lg-offset-3 col-lg-6">
-    <div className="input-group">
-      <span className="input-group-btn">
-        <button className="btn btn-secondary" type="button">Hate it</button>
-      </span>
-      <input type="text" className="form-control" placeholder="Product name" aria-label="Product name" />
-      <span className="input-group-btn">
-        <button className="btn btn-secondary" type="button">Love it</button>
-      </span>
-    </div>
-  </div>
-</div>
+            </div>
 
+          {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
 
-            {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
         </section>
-      );
+      )
     }
 }
 
@@ -134,9 +108,10 @@ class HistoryDisplay extends Component {
     }
 
     render(){
+        console.log(this.props.history)
         const historyItems = this.props.history.map( (historicSearch) => {
             const min = historicSearch.min<10 ? `0${historicSearch.min}` : historicSearch.min
-            return <tr key={historicSearch.day+historicSearch.hour+historicSearch.min +historicSearch.sec + historicSearch.msec}><td>{historicSearch.day}</td><td>{historicSearch.hour}:{min}</td><td><a href='#goToCity' onClick={this.clickHandler}>{historicSearch.searchValue}</a></td></tr>
+            return <tr key={historicSearch.day+historicSearch.hour+historicSearch.min +historicSearch.sec + historicSearch.msec}><td>{historicSearch.day}</td><td>{historicSearch.hour}:{min}</td><td><a href='#goToCity' onClick={this.clickHandler}>{historicSearch.location}</a></td></tr>
         })
         return (
             <table className='HistoryDisplay'>
