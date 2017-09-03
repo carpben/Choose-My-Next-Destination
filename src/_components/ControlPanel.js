@@ -62,19 +62,50 @@ export default class ControlPanel extends Component {
     render() {
       return (
         <section className="App-controller">
+            <div className="first-row">
           <form onSubmit={this.handleSubmit} className="form-inline">
-              <div className="form-div">
-                  <h5>Search It Up</h5>
+              {/* <div className="form-div"> */}
+              <label className="label-type-1">Search It</label>
                   <input className="form-control" type="text" placeholder="Enter City Name" />
                   <input className="btn" type="submit" value="Visit" />
-                  <button className="btn" onClick={this.handleHistoryClick}>Show History</button>
-              </div>
+              {/* </div> */}
           </form>
+          <button className="btn" onClick={this.handleHistoryClick}>Show History</button>
+
+      </div>
+      <div className="second-row">
           <form onSubmit={this.handleSubmit} className="form-inline">
-              <div className="form-group">
+              {/* <div className="form-group"> */}
+              <label className="label-type-1">Or Choose one of SweetInn Cities</label>
+
                   <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
                   <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
-            </div>
+            {/* </div> */}
+        </form>
+    </div>
+    
+    <div className="input-group">
+      <input type="text" className="form-control" placeholder="Search for..." aria-label="Search for..." />
+      <span className="input-group-btn">
+        <button className="btn btn-secondary" type="button">Go!</button>
+      </span>
+    </div>
+<br />
+<div className="row">
+  <div className="col-lg-offset-3 col-lg-6">
+    <div className="input-group">
+      <span className="input-group-btn">
+        <button className="btn btn-secondary" type="button">Hate it</button>
+      </span>
+      <input type="text" className="form-control" placeholder="Product name" aria-label="Product name" />
+      <span className="input-group-btn">
+        <button className="btn btn-secondary" type="button">Love it</button>
+      </span>
+    </div>
+  </div>
+</div>
+
+
             {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
         </section>
       );
@@ -88,7 +119,7 @@ class SelectCity extends Component {
         render (){
             const cityOptions = this.props.sweetInnCities.map((city) => <option key={city}>{city}</option>)
             return (
-                <select onChange={this.handleChange}>
+                <select onChange={this.handleChange} className="custom-select">
                     {cityOptions}
                 </select>
             )

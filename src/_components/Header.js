@@ -6,7 +6,7 @@ export default function Header(){
     return (
         <div className="App-header">
             <img src={globeLogo} className="App-logo" alt="logo" />
-          <h2>Choose My Next Destination</h2>
+          <h1>Choose My Next Destination</h1>
         </div>
     )
 }

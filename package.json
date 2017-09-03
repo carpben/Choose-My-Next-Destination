@@ -7,11 +7,12 @@
     "react-dom": "^15.6.1"
   },
   "devDependencies": {
+    "create-react-app-sass": "^1.1.0",
     "react-scripts": "1.0.12"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts-with-sass start",
+    "build": "react-scripts-with-sass build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }
