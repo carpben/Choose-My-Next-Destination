@@ -74,10 +74,8 @@ export default class ControlPanel extends Component {
               <div className="form-group">
                   <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
                   <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
-              </div>
-          </form>
-
-          {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
+            </div>
+            {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
         </section>
       );
     }
