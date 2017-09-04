@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background-color: #222;
   color: white;
 }
 
@@ -62,7 +61,6 @@
 }
 
 .Presentation {
-    border: 1px solid blue;
     margin-top: 80px;
     margin-bottom: 70px;
     h2 {
@@ -93,6 +91,9 @@
     }
 }
 
+.App-footer {
+    margin-top: 80px;
+}
 
 @keyframes App-logo-spin {
   from { transform: rotateY(0deg); }

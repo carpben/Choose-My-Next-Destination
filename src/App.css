@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background-color: #222;
   color: white; }
 
 .App-header {
@@ -43,7 +42,6 @@
       padding: 5px 15px; }
 
 .Presentation {
-  border: 1px solid blue;
   margin-top: 80px;
   margin-bottom: 70px; }
   .Presentation h2 {
@@ -63,6 +61,9 @@
       border: 8px solid white; }
   .Presentation h4 {
     color: #add8e6; }
+
+.App-footer {
+  margin-top: 80px; }
 
 @keyframes App-logo-spin {
   from {
