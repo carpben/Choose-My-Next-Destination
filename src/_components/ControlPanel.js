@@ -119,15 +119,20 @@ class HistoryDisplay extends Component {
         const historyItems = this.props.history.map( (item) => {
             const min = item.min<10 ? `0${item.min}` : item.min
             return (
-                <tr key={item.day+item.hour+item.min +item.sec + item.msec}>
+                <tr onClick={this.clickHandler} className="history-row" key={item.day+item.hour+item.min +item.sec + item.msec}>
                     <td>{item.day}</td>
                     <td>{item.hour}:{min}</td>
-                    <td><a href='#goToCity' onClick={this.clickHandler}>{item.location}</a></td>
+                    <td>
+                        {/* <a href='#goToCity' onClick={this.clickHandler}> */}
+                            {item.location}
+                        {/* </a> */}
+                    </td>
+                    <td>Flickr.com</td>
                 </tr>
         )})
         return (
             <table className='HistoryDisplay'>
-                <thead><tr><th>Day</th><th>Hour</th><th>Search Value</th></tr></thead>
+                <thead><tr><th>Day</th><th>Hour</th><th>Search Value</th><th>Images From</th></tr></thead>
                 <tbody>{historyItems}</tbody>
             </table>
         )
