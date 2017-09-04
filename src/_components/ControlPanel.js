@@ -110,16 +110,16 @@ class SelectCity extends Component {
 
 
 class HistoryDisplay extends Component {
-    clickHandler = (e) => {
-        console.log(e.target.value)
-        this.props.goToNewLocation(e.target.textContent)
+    clickHandler = (value) => {
+        console.log(value)
+        this.props.goToNewLocation(value)
     }
 
     render(){
         const historyItems = this.props.history.map( (item) => {
             const min = item.min<10 ? `0${item.min}` : item.min
             return (
-                <tr onClick={this.clickHandler} className="history-row" key={item.day+item.hour+item.min +item.sec + item.msec}>
+                <tr onClick={ () => this.props.goToNewLocation(item.location) } className="history-row" key={item.day+item.hour+item.min +item.sec + item.msec}>
                     <td>{item.day}</td>
                     <td>{item.hour}:{min}</td>
                     <td>
