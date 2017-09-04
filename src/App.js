@@ -17,7 +17,7 @@ class App extends Component {
         }
     }
 
-    changeLocationToPresent= (newLocation) => {
+    changeLocation= (newLocation) => {
         // Responsible of all changes to the state when a new location is given. Makes AJAX request to Flickr.com.
         this.setState({locationToPresent:newLocation, presentationLoadCycles:1, isLoading:true})
 
@@ -50,7 +50,7 @@ class App extends Component {
         return (
           <div className="App">
               <Header />
-              <ControlPanel changeLocationToPresent={this.changeLocationToPresent}/>
+              <ControlPanel changeLocation={this.changeLocation}/>
               {this.state.locationToPresent ? presentation : ""}
               <Footer />
           </div>
