@@ -81,7 +81,6 @@ export default class ControlPanel extends Component {
                   <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
                   <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
             </div>
-            <h1>{this.state.test}</h1>
 
           {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
 
@@ -91,13 +90,30 @@ export default class ControlPanel extends Component {
 }
 
 class SelectCity extends Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            selectedValue:'A'
+        }
+    }
         handleChange = (event) => {
-            this.props.changeAndGo(event.target.value)
+            const selectedValue = event.target.value
+            this.setState({selectedValue})
+            console.log('selected')
+            console.log(selectedValue)
+            console.log(typeof(selectedValue))
+            if (selectedValue !== 'A'){
+                console.log('if executes')
+                const cityInt = parseInt(selectedValue)
+                const city = this.props.sweetInnCities[cityInt]
+                this.props.changeAndGo(city)
+            }
         }
         render (){
-            const cityOptions = this.props.sweetInnCities.map((city) => <option key={city}>{city}</option>)
+            const cityOptions = this.props.sweetInnCities.map((city, i) => <option value={i} key={city}>{city}</option>)
             return (
-                <select onChange={this.handleChange} className="custom-select">
+                <select onChange={this.handleChange} value={this.state.selectedValue} className="custom-select">
+                    <option value='A'>Select</option>
                     {cityOptions}
                 </select>
             )

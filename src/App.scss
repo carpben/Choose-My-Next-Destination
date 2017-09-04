@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background-color: #222;
   color: white;
 }
 
@@ -53,33 +52,47 @@
           margin-left: 20px;
       }
   }
-
+  .HistoryDisplay {
+      margin: 20px auto;
+      th {
+          padding: 5px 15px;
+      }
+  }
 }
+
 .Presentation {
-    border: 1px solid blue;
+    margin-top: 80px;
+    margin-bottom: 70px;
+    h2 {
+        margin-bottom: 20px;
+    }
     // img {
     //     width: 30%;
     //     margin: 50px;
     //     display: inline-block;
     // }
     .img-presentation {
+        width: 1150px;
+        margin: auto;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        align-items: center;
         img {
             width: 30%;
             height: 30%;
             margin-top: 20px;
             margin-bottom: 20px;
+            border: 8px solid white;
         }
+    }
+    h4{
+        color: #add8e6;
     }
 }
 
-.HistoryDisplay {
-    margin: 20px auto;
-    th {
-        padding: 5px 15px;
-    }
+.App-footer {
+    margin-top: 80px;
 }
 
 @keyframes App-logo-spin {

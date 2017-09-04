@@ -3,8 +3,8 @@ import '../App.css'
 
 export default function Footer (){
   return (
-    <div id="Footer">
+    <footer className="App-footer">
       <p>Build by Ben Carp, on Top of CreateReactApp</p>
-    </div>
+  </footer>
   )
 }
