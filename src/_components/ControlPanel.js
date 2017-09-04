@@ -9,20 +9,18 @@ export default class ControlPanel extends Component {
           searchInput: '',
           showHistory: false,
           history: [],
-          test:""
+          sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
       };
     }
 
     changeSearchInput = (newSearchInput)=>{
-        console.log(`changeSearchInput started with ${newSearchInput}`)
+        // Controls the value of the search input.
         this.setState ({
             searchInput:newSearchInput,
-            test:newSearchInput
         })
     }
-    go = (newLocation)=>{
-        console.log(`go started ${newLocation}`)
-        // this.changeSearchInput(newLocation)
+    updateHistory = (newLocation) => {
+        // updates the this.state.history
         const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         const dateObj = new Date()
         const dayInt = dateObj.getDay()
@@ -32,33 +30,29 @@ export default class ControlPanel extends Component {
         const sec = dateObj.getSeconds() //seconds and milsecs are collected for the unique key when creating lists and similar elements.
         const msec = dateObj.getMilliseconds()
         const newHistory = [...this.state.history, { location:newLocation, day, hour, min, sec, msec }]
-
-        this.props.changeLocationToPresent(newLocation)
         this.setState({ history: newHistory })
-        console.log(newHistory)
     }
-    changeAndGo = (newSearchInput) => {
-        this.changeSearchInput(newSearchInput)
-        this.go(newSearchInput)
+    goToNewLocation = (newLocation)=>{
+        // all activities needed for a new location.
+        this.changeSearchInput(newLocation)
+        this.updateHistory(newLocation)
+        this.props.changeLocation(newLocation)
     }
+
     handleSearchFieldChange = (event) => {
       this.changeSearchInput(event.target.value);
-      console.log(`handleSearchFieldChange called ${this.state.searchInput}`)
     }
     handleSubmit = (event) => {
-        console.log('submit pressed')
-        console.log(this.state.searchInput)
-            this.go(this.state.searchInput)
-            event.preventDefault();
+        this.goToNewLocation(this.state.searchInput)
+        event.preventDefault();
     }
     handleRandomClick = (event) => {
-        let randInt = Math.floor(Math.random()*this.props.sweetInnCities.length)
-        let randCity = this.props.sweetInnCities[randInt]
-        this.changeAndGo(randCity)
+        let randInt = Math.floor(Math.random()*this.state.sweetInnCities.length)
+        let randCity = this.state.sweetInnCities[randInt]
+        this.goToNewLocation(randCity)
     }
     handleHistoryClick = (events) => {
-        const showHistoryNew = !this.state.showHistory
-        this.setState({showHistory:showHistoryNew})
+        this.setState((prevState) => ({showHistory: !(prevState.showHistory)}))
     }
 
     render() {
@@ -67,22 +61,20 @@ export default class ControlPanel extends Component {
 
             <div className="first-row">
               <form onSubmit={this.handleSubmit} className="form-inline">
-                  {/* <div className="form-div"> */}
                   <label className="label-type-1">Search It</label>
                       <input onChange={this.handleSearchFieldChange} className="form-control search-input" type="text" placeholder="Enter City Name" value={this.state.searchInput}/>
                       <input className="btn search-submit" type="submit" />
-                  {/* </div> */}
               </form>
               <button className="btn" onClick={this.handleHistoryClick}>Show History</button>
             </div>
 
             <div className="second-row">
                   <label className="label-type-1">Or Choose one of SweetInn Cities</label>
-                  <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
+                  <SelectCity sweetInnCities={this.state.sweetInnCities} goToNewLocation={this.goToNewLocation} />
                   <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
             </div>
 
-          {this.state.showHistory? <HistoryDisplay history={this.state.history} changeAndGo={this.changeAndGo} /> : <div /> }
+          {this.state.showHistory? <HistoryDisplay history={this.state.history} goToNewLocation={this.goToNewLocation} /> : "" }
 
         </section>
       )
@@ -96,43 +88,43 @@ class SelectCity extends Component {
             selectedValue:'A'
         }
     }
-        handleChange = (event) => {
-            const selectedValue = event.target.value
-            this.setState({selectedValue})
-            console.log('selected')
-            console.log(selectedValue)
-            console.log(typeof(selectedValue))
-            if (selectedValue !== 'A'){
-                console.log('if executes')
-                const cityInt = parseInt(selectedValue)
-                const city = this.props.sweetInnCities[cityInt]
-                this.props.changeAndGo(city)
-            }
+    handleChange = (event) => {
+        const selectedValue = event.target.value
+        this.setState({selectedValue})
+        if (selectedValue !== 'A'){
+            const cityInt = parseInt(selectedValue)
+            const city = this.props.sweetInnCities[cityInt]
+            this.props.goToNewLocation(city)
         }
-        render (){
-            const cityOptions = this.props.sweetInnCities.map((city, i) => <option value={i} key={city}>{city}</option>)
-            return (
-                <select onChange={this.handleChange} value={this.state.selectedValue} className="custom-select">
-                    <option value='A'>Select</option>
-                    {cityOptions}
-                </select>
-            )
-        }
+    }
+    render (){
+        const cityOptions = this.props.sweetInnCities.map((city, i) => <option value={i} key={city}>{city}</option>)
+        return (
+            <select onChange={this.handleChange} value={this.state.selectedValue} className="custom-select">
+                <option value='A'>Select</option>
+                {cityOptions}
+            </select>
+        )
+    }
 }
 
 
 class HistoryDisplay extends Component {
     clickHandler = (e) => {
         console.log(e.target.value)
-        this.props.changeAndGo(e.target.textContent)
+        this.props.goToNewLocation(e.target.textContent)
     }
 
     render(){
-        console.log(this.props.history)
-        const historyItems = this.props.history.map( (historicSearch) => {
-            const min = historicSearch.min<10 ? `0${historicSearch.min}` : historicSearch.min
-            return <tr key={historicSearch.day+historicSearch.hour+historicSearch.min +historicSearch.sec + historicSearch.msec}><td>{historicSearch.day}</td><td>{historicSearch.hour}:{min}</td><td><a href='#goToCity' onClick={this.clickHandler}>{historicSearch.location}</a></td></tr>
-        })
+        const historyItems = this.props.history.map( (item) => {
+            const min = item.min<10 ? `0${item.min}` : item.min
+            return (
+                <tr key={item.day+item.hour+item.min +item.sec + item.msec}>
+                    <td>{item.day}</td>
+                    <td>{item.hour}:{min}</td>
+                    <td><a href='#goToCity' onClick={this.clickHandler}>{item.location}</a></td>
+                </tr>
+        )})
         return (
             <table className='HistoryDisplay'>
                 <thead><tr><th>Day</th><th>Hour</th><th>Search Value</th></tr></thead>

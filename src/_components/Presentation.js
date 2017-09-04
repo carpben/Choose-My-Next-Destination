@@ -7,25 +7,18 @@ export default class Presentation extends Component {
     }
 
     render (){
-        const galleryHeader = <h2><small>Check Out</small> {this.props.locationToPresent}</h2>
         const loadingHeader = <h2>Loading {this.props.locationToPresent} ... </h2>
+        const galleryHeader = <h2><small>Check Out</small> {this.props.locationToPresent}</h2>
 
         let limit = this.props.presentationLoadCycles * 9
         limit = (this.props.imgURLs.length<limit)? this.props.imgURLs.length : limit
-        console.log(limit)
 
         const imgURLsToPresent = this.props.imgURLs.filter( (url, key) => {
             return key<limit
         })
-
         let gallery = (
-            <div className="img-presentation">
-                {imgURLsToPresent.map( (url) => (
-                    // <div className="img-w" key={url}>
-                        <img src={url} alt={this.props.destination} />
-                    //  </div>
-                )
-                )}
+            <div className="gallery">
+                {imgURLsToPresent.map( (url) => <img src={url} data-featherlight={url} alt={this.props.destination} />)}
             </div>
         )
 

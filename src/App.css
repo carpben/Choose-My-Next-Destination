@@ -46,14 +46,14 @@
   margin-bottom: 70px; }
   .Presentation h2 {
     margin-bottom: 20px; }
-  .Presentation .img-presentation {
+  .Presentation .gallery {
     width: 1150px;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center; }
-    .Presentation .img-presentation img {
+    .Presentation .gallery img {
       width: 30%;
       height: 30%;
       margin-top: 20px;
