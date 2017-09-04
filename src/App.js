@@ -19,7 +19,7 @@ class App extends Component {
     }
     updateImgURLs = (Location, imgLimit) => {
         const flickrKey= "f7c143a6865aefe5a377912d751edb5a"
-        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=70&tags=${Location}&extras=url_l&format=json&nojsoncallback=1`
+        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=70&tags=${Location}&extras=url_l,url_o,url_m&format=json&nojsoncallback=1`
         console.log(`AJAXURL: ${AJAXURL}`)
         fetch(AJAXURL)
             .then(res => res.json())
@@ -27,6 +27,7 @@ class App extends Component {
                 // console.log(data)
                 let imgURLs = []
                 data.photos.photo.forEach( (photo) => {
+                    console.log(photo)
                     if (photo.width_l==="1024"){
                         imgURLs.push(photo.url_l)
                     }
@@ -46,7 +47,6 @@ class App extends Component {
     }
     incrementPresentationLoadCycles = () => {
         this.setState((prevState) => ({presentationLoadCycles:prevState.presentationLoadCycles+1}) )
-        console.log('cycle incremented')
     }
 
   render() {
