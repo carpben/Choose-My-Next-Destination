@@ -1,10 +1,10 @@
-#Chosse My Next Destination
+# Chosse My Next Destination
 
 =========
 
 This web app allows users to choose a location and view images from flickr.com.
 
-###Notes:
+### Notes:
 * The app was build on top of Create-React-App.
 * I consulted brandon fancher in the process.
 * Libraries used:
