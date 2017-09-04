@@ -37,11 +37,18 @@
   .App-controller .second-row .btn {
     margin-left: 20px; }
   .App-controller .HistoryDisplay {
-    margin: 20px auto; }
+    margin: 35px 0 20px 0; }
+    .App-controller .HistoryDisplay table {
+      margin: 0 auto; }
     .App-controller .HistoryDisplay th {
-      padding: 5px 15px; }
+      padding: 5px 15px;
+      text-align: center; }
     .App-controller .HistoryDisplay .history-row {
       cursor: pointer; }
+    .App-controller .HistoryDisplay h4 {
+      display: inline; }
+    .App-controller .HistoryDisplay .clear-history-btn {
+      margin-left: 15px; }
 
 .Presentation {
   margin-top: 80px;

@@ -69,12 +69,16 @@ class App extends Component {
         this.setState({imagesToLoad:newValOfImagesToLoad} )
     }
 
+    clearHistory = () => {
+        this.setState({history:[]})
+    }
+
     render() {
         const presentation = <Presentation showMoreImages={this.showMoreImages} locationToPresent={this.state.locationToPresent} imgURLs={this.state.imgURLs} imagesToLoad={this.state.imagesToLoad} isLoading={this.state.isLoading}/>
         return (
           <div className="App">
               <Header />
-              <ControlPanel changeLocation={this.changeLocation} history={this.state.history}/>
+              <ControlPanel changeLocation={this.changeLocation} clearHistory={this.clearHistory} history={this.state.history}/>
               {this.state.locationToPresent ? presentation : ""}
               <Footer />
           </div>
