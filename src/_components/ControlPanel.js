@@ -9,6 +9,7 @@ export default class ControlPanel extends Component {
           searchInput: '',
           showHistory: false,
           history: [],
+          sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
           test:""
       };
     }
@@ -52,8 +53,8 @@ export default class ControlPanel extends Component {
             event.preventDefault();
     }
     handleRandomClick = (event) => {
-        let randInt = Math.floor(Math.random()*this.props.sweetInnCities.length)
-        let randCity = this.props.sweetInnCities[randInt]
+        let randInt = Math.floor(Math.random()*this.state.sweetInnCities.length)
+        let randCity = this.state.sweetInnCities[randInt]
         this.changeAndGo(randCity)
     }
     handleHistoryClick = (events) => {
@@ -78,7 +79,7 @@ export default class ControlPanel extends Component {
 
             <div className="second-row">
                   <label className="label-type-1">Or Choose one of SweetInn Cities</label>
-                  <SelectCity sweetInnCities={this.props.sweetInnCities} changeAndGo={this.changeAndGo} />
+                  <SelectCity sweetInnCities={this.state.sweetInnCities} changeAndGo={this.changeAndGo} />
                   <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
             </div>
 
