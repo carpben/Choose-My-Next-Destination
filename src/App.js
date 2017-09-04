@@ -35,7 +35,7 @@ class App extends Component {
     }
 
     changeLocation= (newLocation) => {
-        // Responsible of all changes to the state when a new location is given. Makes AJAX request to Flickr.com.
+        // Responsible to update the state when a new location is given. Makes AJAX request to Flickr.com.
         this.addLocationToHistory(newLocation)
         this.setState({locationToPresent:newLocation, imagesToLoad:9, isLoading:true})
 
@@ -56,13 +56,14 @@ class App extends Component {
     }
 
     updateViewsInHistory = (int) => {
+        // Updates the number of views of a search in state.history
         let newHistory = [...this.state.history]
         newHistory[newHistory.length-1].views=int
-        console.log(newHistory)
         this.setState( {history : newHistory} )
     }
 
     showMoreImages = () => {
+        // Responsible to update the state to show more images
         let newValOfImagesToLoad = this.state.imagesToLoad + 9
         newValOfImagesToLoad = (newValOfImagesToLoad<this.state.imgURLs.length)? newValOfImagesToLoad : this.state.imgURLs.length
         this.updateViewsInHistory (newValOfImagesToLoad)
