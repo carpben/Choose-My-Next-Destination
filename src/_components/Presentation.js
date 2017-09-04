@@ -22,7 +22,7 @@ export default class Presentation extends Component {
             <div className="img-presentation">
                 {imgURLsToPresent.map( (url) => (
                     // <div className="img-w" key={url}>
-                        <img src={url} alt={this.props.destination} />
+                        <img src={url} data-featherlight={url} alt={this.props.destination} />
                     //  </div>
                 )
                 )}

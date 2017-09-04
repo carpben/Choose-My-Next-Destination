@@ -17,9 +17,13 @@ class App extends Component {
             isLoading:false
         }
     }
-    updateImgURLs = (Location, imgLimit) => {
+
+    changeLocationToPresent= (newLocation) => {
+        console.log('destination changed')
+        this.setState({locationToPresent:newLocation, presentationLoadCycles:1, isLoading:true})
+
         const flickrKey= "f7c143a6865aefe5a377912d751edb5a"
-        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=70&tags=${Location}&extras=url_l,url_o,url_m&format=json&nojsoncallback=1`
+        const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=70&tags=${newLocation}&extras=url_l,url_o,url_m&format=json&nojsoncallback=1`
         console.log(`AJAXURL: ${AJAXURL}`)
         fetch(AJAXURL)
             .then(res => res.json())
@@ -38,12 +42,6 @@ class App extends Component {
                 this.setState({imgURLs, isLoading:false})
             })
             .catch((error)=>{console.log(error)})
-    }
-
-    changeLocationToPresent= (newLocation) => {
-        console.log('destination changed')
-        this.setState({locationToPresent:newLocation, presentationLoadCycles:1, isLoading:true})
-        this.updateImgURLs(newLocation, 9)
     }
     incrementPresentationLoadCycles = () => {
         this.setState((prevState) => ({presentationLoadCycles:prevState.presentationLoadCycles+1}) )
