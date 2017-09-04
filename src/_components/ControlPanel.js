@@ -8,7 +8,6 @@ export default class ControlPanel extends Component {
       this.state = {
           searchInput: '',
           showHistory: false,
-          history: [],
           sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
       };
     }
@@ -19,23 +18,10 @@ export default class ControlPanel extends Component {
             searchInput:newSearchInput,
         })
     }
-    updateHistory = (newLocation) => {
-        // updates the this.state.history
-        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-        const dateObj = new Date()
-        const dayInt = dateObj.getDay()
-        const day = days[dayInt]
-        const hour = dateObj.getHours()
-        const min = dateObj.getMinutes()
-        const sec = dateObj.getSeconds() //seconds and milsecs are collected for the unique key when creating lists and similar elements.
-        const msec = dateObj.getMilliseconds()
-        const newHistory = [...this.state.history, { location:newLocation, day, hour, min, sec, msec }]
-        this.setState({ history: newHistory })
-    }
+
     goToNewLocation = (newLocation)=>{
         // all activities needed for a new location.
         this.changeSearchInput(newLocation)
-        this.updateHistory(newLocation)
         this.props.changeLocation(newLocation)
     }
 
@@ -74,7 +60,7 @@ export default class ControlPanel extends Component {
                   <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
             </div>
 
-          {this.state.showHistory? <HistoryDisplay history={this.state.history} goToNewLocation={this.goToNewLocation} /> : "" }
+          {this.state.showHistory? <HistoryDisplay history={this.props.history} goToNewLocation={this.goToNewLocation} /> : "" }
 
         </section>
       )
@@ -110,24 +96,30 @@ class SelectCity extends Component {
 
 
 class HistoryDisplay extends Component {
-    clickHandler = (e) => {
-        console.log(e.target.value)
-        this.props.goToNewLocation(e.target.textContent)
+    clickHandler = (value) => {
+        console.log(value)
+        this.props.goToNewLocation(value)
     }
 
     render(){
         const historyItems = this.props.history.map( (item) => {
             const min = item.min<10 ? `0${item.min}` : item.min
             return (
-                <tr key={item.day+item.hour+item.min +item.sec + item.msec}>
+                <tr onClick={ () => this.props.goToNewLocation(item.location) } className="history-row" key={item.day+item.hour+item.min +item.sec + item.msec}>
                     <td>{item.day}</td>
                     <td>{item.hour}:{min}</td>
-                    <td><a href='#goToCity' onClick={this.clickHandler}>{item.location}</a></td>
+                    <td>
+                        {/* <a href='#goToCity' onClick={this.clickHandler}> */}
+                            {item.location}
+                        {/* </a> */}
+                    </td>
+                    <td>Flickr.com</td>
+                    <td>{item.views}</td>
                 </tr>
         )})
         return (
             <table className='HistoryDisplay'>
-                <thead><tr><th>Day</th><th>Hour</th><th>Search Value</th></tr></thead>
+                <thead><tr><th>Day</th><th>Hour</th><th>Search Value</th><th>Images From</th><th>Views</th></tr></thead>
                 <tbody>{historyItems}</tbody>
             </table>
         )
