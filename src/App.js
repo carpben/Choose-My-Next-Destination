@@ -37,7 +37,7 @@ class App extends Component {
     changeLocation= (newLocation) => {
         // Responsible of all changes to the state when a new location is given. Makes AJAX request to Flickr.com.
         this.addLocationToHistory(newLocation)
-        this.setState({locationToPresent:newLocation, presentationLoadCycles:1, isLoading:true})
+        this.setState({locationToPresent:newLocation, imagesToLoad:9, isLoading:true})
 
         const flickrKey= "f7c143a6865aefe5a377912d751edb5a"
         const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=70&tags=${newLocation}&extras=url_l,url_o,url_m&format=json&nojsoncallback=1`
