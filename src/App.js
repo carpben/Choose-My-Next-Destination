@@ -35,9 +35,9 @@ class App extends Component {
     }
 
     changeLocation= (newLocation) => {
-        // Responsible of all changes to the state when a new location is given. Makes AJAX request to Flickr.com.
+        // Responsible to update the state when a new location is given. Makes AJAX request to Flickr.com.
         this.addLocationToHistory(newLocation)
-        this.setState({locationToPresent:newLocation, presentationLoadCycles:1, isLoading:true})
+        this.setState({locationToPresent:newLocation, imagesToLoad:9, isLoading:true})
 
         const flickrKey= "f7c143a6865aefe5a377912d751edb5a"
         const AJAXURL=`https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickrKey}&per_page=70&tags=${newLocation}&extras=url_l,url_o,url_m&format=json&nojsoncallback=1`
@@ -56,17 +56,22 @@ class App extends Component {
     }
 
     updateViewsInHistory = (int) => {
+        // Updates the number of views of a search in state.history
         let newHistory = [...this.state.history]
         newHistory[newHistory.length-1].views=int
-        console.log(newHistory)
         this.setState( {history : newHistory} )
     }
 
     showMoreImages = () => {
+        // Responsible to update the state to show more images
         let newValOfImagesToLoad = this.state.imagesToLoad + 9
         newValOfImagesToLoad = (newValOfImagesToLoad<this.state.imgURLs.length)? newValOfImagesToLoad : this.state.imgURLs.length
         this.updateViewsInHistory (newValOfImagesToLoad)
         this.setState({imagesToLoad:newValOfImagesToLoad} )
+    }
+
+    clearHistory = () => {
+        this.setState({history:[]})
     }
 
     render() {
@@ -74,7 +79,7 @@ class App extends Component {
         return (
           <div className="App">
               <Header />
-              <ControlPanel changeLocation={this.changeLocation} history={this.state.history}/>
+              <ControlPanel changeLocation={this.changeLocation} clearHistory={this.clearHistory} history={this.state.history}/>
               {this.state.locationToPresent ? presentation : ""}
               <Footer />
           </div>

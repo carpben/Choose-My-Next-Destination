@@ -4,11 +4,11 @@ import '../App.css'
 
 export default class ControlPanel extends Component {
     constructor(props) {
-      super(props);
-      this.state = {
-          searchInput: '',
-          showHistory: false,
-          sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
+        super(props);
+        this.state = {
+            searchInput: '',
+            showHistory: false,
+            sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
       };
     }
 
@@ -60,7 +60,7 @@ export default class ControlPanel extends Component {
                   <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
             </div>
 
-          {this.state.showHistory? <HistoryDisplay history={this.props.history} goToNewLocation={this.goToNewLocation} /> : "" }
+          {this.state.showHistory? <HistoryDisplay clearHistory={this.props.clearHistory} history={this.props.history} goToNewLocation={this.goToNewLocation} /> : "" }
 
         </section>
       )
@@ -78,7 +78,7 @@ class SelectCity extends Component {
         const selectedValue = event.target.value
         this.setState({selectedValue})
         if (selectedValue !== 'A'){
-            const cityInt = parseInt(selectedValue)
+            const cityInt = parseInt(selectedValue, 10)
             const city = this.props.sweetInnCities[cityInt]
             this.props.goToNewLocation(city)
         }
@@ -102,26 +102,30 @@ class HistoryDisplay extends Component {
     }
 
     render(){
+        const clearHistoryButton = <button onClick={this.props.clearHistory} type="button" className="btn btn-link clear-history-btn">Clear</button>
+        const header = <div><h4>Search History</h4>{clearHistoryButton}</div>
         const historyItems = this.props.history.map( (item) => {
             const min = item.min<10 ? `0${item.min}` : item.min
             return (
                 <tr onClick={ () => this.props.goToNewLocation(item.location) } className="history-row" key={item.day+item.hour+item.min +item.sec + item.msec}>
                     <td>{item.day}</td>
                     <td>{item.hour}:{min}</td>
-                    <td>
-                        {/* <a href='#goToCity' onClick={this.clickHandler}> */}
-                            {item.location}
-                        {/* </a> */}
-                    </td>
+                    <td>{item.location}</td>
                     <td>Flickr.com</td>
                     <td>{item.views}</td>
                 </tr>
         )})
         return (
-            <table className='HistoryDisplay'>
-                <thead><tr><th>Day</th><th>Hour</th><th>Search Value</th><th>Images From</th><th>Views</th></tr></thead>
-                <tbody>{historyItems}</tbody>
-            </table>
+            <div className='HistoryDisplay'>
+                {header}
+                <table>
+                    <thead><tr><th>Day</th><th>Hour</th><th>Search Value</th><th>Images From</th><th>Views</th></tr></thead>
+                    <tbody>
+                        {historyItems}
+                    </tbody>
+                </table>
+            </div>
+
         )
     }
 }

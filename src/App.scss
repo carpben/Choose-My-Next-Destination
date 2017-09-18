@@ -53,12 +53,24 @@
       }
   }
   .HistoryDisplay {
-      margin: 20px auto;
+      margin: 35px 0 20px 0;
+      table {
+          margin: 0 auto;
+      }
       th {
           padding: 5px 15px;
+          text-align: center;
       }
       .history-row {
           cursor: pointer;
+      }
+      h4 {
+          display: inline;
+      }
+      .clear-history-btn {
+          margin-left: 15px;
+        //   position: relative;
+        //   right: 209px
       }
   }
 }
