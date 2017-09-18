@@ -4,11 +4,11 @@ import '../App.css'
 
 export default class ControlPanel extends Component {
     constructor(props) {
-      super(props);
-      this.state = {
-          searchInput: '',
-          showHistory: false,
-          sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
+        super(props);
+        this.state = {
+            searchInput: '',
+            showHistory: false,
+            sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
       };
     }
 
@@ -78,7 +78,7 @@ class SelectCity extends Component {
         const selectedValue = event.target.value
         this.setState({selectedValue})
         if (selectedValue !== 'A'){
-            const cityInt = parseInt(selectedValue)
+            const cityInt = parseInt(selectedValue, 10)
             const city = this.props.sweetInnCities[cityInt]
             this.props.goToNewLocation(city)
         }
