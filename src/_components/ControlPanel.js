@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
 
+const MostPopularCities = ["Bangkok, Thailand", "London, UK", "Paris, France", "Dubai, UAE", "New York, NY", "Singapore", "Kuala Lumpur, Malaysia", "Istanbul, Turkey", "Istanbul, Turkey", "Tokyo, Japan", "Seoul, South Korea"]
 
 export default class ControlPanel extends Component {
     constructor(props) {
@@ -8,7 +9,6 @@ export default class ControlPanel extends Component {
         this.state = {
             searchInput: '',
             showHistory: false,
-            sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"  ],
       };
     }
 
@@ -33,8 +33,8 @@ export default class ControlPanel extends Component {
         event.preventDefault();
     }
     handleRandomClick = (event) => {
-        let randInt = Math.floor(Math.random()*this.state.sweetInnCities.length)
-        let randCity = this.state.sweetInnCities[randInt]
+        let randInt = Math.floor(Math.random()*MostPopularCities.length)
+        let randCity = MostPopularCities[randInt]
         this.goToNewLocation(randCity)
     }
     handleHistoryClick = (events) => {
@@ -55,9 +55,9 @@ export default class ControlPanel extends Component {
             </div>
 
             <div className="second-row">
-                  <label className="label-type-1">Or Choose one of SweetInn Cities</label>
-                  <SelectCity sweetInnCities={this.state.sweetInnCities} goToNewLocation={this.goToNewLocation} />
-                  <button className="btn" onClick={this.handleRandomClick}>Random SweatINN City</button>
+                  <label className="label-type-1">Or Choose a popular city</label>
+                  <SelectCity goToNewLocation={this.goToNewLocation} />
+                  <button className="btn" onClick={this.handleRandomClick}>Random  City</button>
             </div>
 
           {this.state.showHistory? <HistoryDisplay clearHistory={this.props.clearHistory} history={this.props.history} goToNewLocation={this.goToNewLocation} /> : "" }
@@ -79,12 +79,12 @@ class SelectCity extends Component {
         this.setState({selectedValue})
         if (selectedValue !== 'A'){
             const cityInt = parseInt(selectedValue, 10)
-            const city = this.props.sweetInnCities[cityInt]
+            const city = MostPopularCities[cityInt]
             this.props.goToNewLocation(city)
         }
     }
     render (){
-        const cityOptions = this.props.sweetInnCities.map((city, i) => <option value={i} key={city}>{city}</option>)
+        const cityOptions = MostPopularCities.map((city, i) => <option value={i} key={city}>{city}</option>)
         return (
             <select onChange={this.handleChange} value={this.state.selectedValue} className="custom-select">
                 <option value='A'>Select</option>
