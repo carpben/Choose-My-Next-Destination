@@ -8,7 +8,7 @@ export default class ControlPanel extends Component {
         this.state = {
             searchInput: '',
             showHistory: false,
-            sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"],
+            sweetInnCities : ["BARCELONA", "BRUSSELS", "JERUSALEM", "LISBON", "ROME", "TEL AVIV"  ],
       };
     }
 
