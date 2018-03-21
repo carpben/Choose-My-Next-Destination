@@ -7,6 +7,7 @@ export default function Header(){
         <div className="App-header">
             <img src={globeLogo} className="App-logo" alt="logo" />
           <h1>Choose My Next Destination</h1>
+          <h2>Now or later</h2>
         </div>
     )
 }
